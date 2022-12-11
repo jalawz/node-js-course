@@ -2,9 +2,6 @@ const path = require('path');
 
 const express = require('express');
 
-const adminRoutes = require('./routes/admin');
-const shopRoutes = require('./routes/shop');
-
 const errorController = require('./controllers/error');
 
 // Create express app
@@ -13,6 +10,9 @@ const app = express();
 // Register template engines
 app.set('view engine', 'ejs');
 app.set('views', 'views');
+
+const adminRoutes = require('./routes/admin');
+const shopRoutes = require('./routes/shop');
 
 // Add express middleware
 app.use(express.json());
