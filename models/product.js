@@ -1,3 +1,4 @@
+const { randomUUID } = require('crypto');
 const fs = require('fs');
 const path = require('path');
 
@@ -26,6 +27,7 @@ module.exports = class Product {
     }
 
     save() {
+        this.id = randomUUID.toString();
         getProductsFromFile(products => {
             products.push(this);
             fs.writeFile(p, JSON.stringify(products), (err) => {
