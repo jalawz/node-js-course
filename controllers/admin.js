@@ -4,9 +4,7 @@ exports.getAddProduct = (req, res, next) => {
     res.render('admin/edit-product', {
         pageTitle: 'Add Product',
         path: '/admin/add-product',
-        formsCSS: true,
-        productCSS: true,
-        activeAddProduct: true
+        editing: false
     });
 }
 
@@ -22,11 +20,19 @@ exports.getEditProduct = (req, res, next) => {
     if (!edit) {
         return res.redirect('/');
     }
-    res.render('admin/edit-product', {
-        pageTitle: 'Edit Product',
-        path: '/edit/add-product',
-        editing: edit
+    const { productId } = req.params;
+    Product.findById(productId, product => {
+        if (!product) {
+            return res.redirect('/');
+        }
+        res.render('admin/edit-product', {
+            pageTitle: 'Edit Product',
+            path: '/edit/add-product',
+            editing: edit,
+            product: product
+        });
     });
+    
 }
 
 exports.getProducts = (req, res, next) => {
