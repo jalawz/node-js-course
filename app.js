@@ -3,6 +3,7 @@ const path = require('path');
 const express = require('express');
 
 const errorController = require('./controllers/error');
+const db = require('./util/database');
 
 // Create express app
 const app = express();
@@ -13,6 +14,14 @@ app.set('views', 'views');
 
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
+
+db.execute('SELECT * FROM products')
+    .then(result => {
+        console.log(result[0]);
+    })
+    .catch(err => {
+        console.log(err);
+    });
 
 // Add express middleware
 app.use(express.json());
