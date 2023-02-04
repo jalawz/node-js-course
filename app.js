@@ -23,6 +23,15 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use((req, res, next) => {
+    User.findByPk(1)
+        .then(user => {
+            req.user = user;
+            next();
+        })
+        .catch(err => console.error(err));
+})
+
 // Register routes
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
@@ -37,9 +46,23 @@ User.hasMany(Product);
 
 
 
-sequelize.sync({force: true})
+sequelize
+    // .sync({force: true})
+    .sync()
     .then(result => {
         //console.log(result);
-        app.listen(3000);
+        return User.findByPk(1);
+    })
+    .then(user => {
+        if (!user) {
+            return User.create({
+                name: 'Paulo Menezes',
+                email: 'paulo.menezes@gmail.com'
+            });
+        }
+        return Promise.resolve(user);
+    })
+    .then(user => {
+        app.listen(3000)
     })
     .catch(err => console.log(err));
