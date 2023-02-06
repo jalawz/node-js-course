@@ -34,7 +34,8 @@ exports.getEditProduct = (req, res, next) => {
     const { user } = req;
 
     user.getProducts({where: { id: productId }})
-        .then(product => {
+        .then(products => {
+            const product = products[0];
             if (!product) {
                 return res.redirect('/');
             }
@@ -42,7 +43,7 @@ exports.getEditProduct = (req, res, next) => {
                 pageTitle: 'Edit Product',
                 path: '/edit/add-product',
                 editing: edit,
-                product: product[0]
+                product: product
             });
         })
         .catch(err => console.log(err));
