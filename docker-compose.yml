@@ -1,24 +1,13 @@
-version: '3.5'
-
+version: "3.7"
 services:
   db:
-    container_name: mysql_node_course
-    image: mysql
+    container_name: mongo-node-course
+    image: mongo:4.2
     environment:
-      MYSQL_USER: paulo
-      MYSQL_PASSWORD: penha269
-      MYSQL_ROOT_PASSWORD: penha269
-    volumes:
-      - mysql:/var/lib/mysql
+      - MONGO_INITDB_ROOT_USERNAME=paulo
+      - MONGO_INITDB_DATABASE=node-complete
+      - MONGO_INITDB_ROOT_PASSWORD=penha269
     ports:
-      - "3306:3306"
-    networks:
-      - mysql
-    restart: unless-stopped
-
-networks:
-  mysql:
-    driver: bridge
-
-volumes:
-  mysql:
+      - '27017:27017'
+    volumes:
+      - ./data:/data/db
