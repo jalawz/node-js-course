@@ -24,7 +24,7 @@ exports.postAddProduct = (req, res, next) => {
     });
 }
 
-exports.getEditProduct = (req, res, next) => {
+/* exports.getEditProduct = (req, res, next) => {
     const { edit } = req.query
     const { productId } = req.params;
     if (!edit) {
@@ -96,4 +96,4 @@ exports.postDeleteProduct = (req, res, next) => {
             res.redirect('/admin/products');
         })
         .catch(err => console.error(err));
-}
+} */

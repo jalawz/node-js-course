@@ -3,7 +3,7 @@ const path = require('path');
 const express = require('express');
 
 const errorController = require('./controllers/error');
-const mongoConnect = require('./util/database');
+const mongoConnect = require('./util/database').mongoConnect;
 
 // Create express app
 const app = express();
@@ -28,6 +28,7 @@ app.use((req, res, next) => {
     //         next();
     //     })
     //     .catch(err => console.error(err));
+    next();
 })
 
 // Register routes
