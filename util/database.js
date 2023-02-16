@@ -1,14 +1,13 @@
 const mongodb = require('mongodb');
-const { get } = require('../routes/admin');
 const MongoClient = mongodb.MongoClient;
 
 let _db;
 
 const mongoConnect = (callback) => {
-    MongoClient.connect('mongodb://127.0.0.1:27017')
+    MongoClient.connect('mongodb://paulo:penha269@127.0.0.1:27017')
     .then(client => {
         console.log('Connected!');
-        _db = client.db();
+        _db = client.db('node_complete');
         callback();
     })
     .catch(err => {
