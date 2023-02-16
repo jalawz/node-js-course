@@ -1,13 +1,29 @@
 const mongodb = require('mongodb');
+const { get } = require('../routes/admin');
 const MongoClient = mongodb.MongoClient;
+
+let _db;
 
 const mongoConnect = (callback) => {
     MongoClient.connect('mongodb://127.0.0.1:27017')
-    .then(result => {
+    .then(client => {
         console.log('Connected!');
-        callback(result);
+        _db = client.db();
+        callback();
     })
-    .catch(err => console.error(err));
+    .catch(err => {
+        console.error(err);
+        throw err;
+    });
 };
 
-module.exports = mongoConnect;
+const getDb = () => {
+    if (_db) {
+        return _db
+    }
+
+    throw 'No database found!';
+}
+
+exports.mongoConnect = mongoConnect;
+exports.getDb = getDb;
