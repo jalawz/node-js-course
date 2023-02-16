@@ -12,7 +12,7 @@ const app = express();
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 
-// const adminRoutes = require('./routes/admin');
+const adminRoutes = require('./routes/admin');
 // const shopRoutes = require('./routes/shop');
 
 
@@ -31,7 +31,7 @@ app.use((req, res, next) => {
 })
 
 // Register routes
-// app.use('/admin', adminRoutes);
+app.use('/admin', adminRoutes);
 // app.use(shopRoutes);
 
 app.use(errorController.get404);
