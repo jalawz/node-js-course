@@ -20,7 +20,6 @@ const getDb = () => {
     if (_db) {
         return _db
     }
-
     throw 'No database found!';
 }
 
