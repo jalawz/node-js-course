@@ -27,11 +27,9 @@ exports.getEditProduct = (req, res, next) => {
         return res.redirect('/');
     }
     
-    const { user } = req;
 
-    user.getProducts({where: { id: productId }})
-        .then(products => {
-            const product = products[0];
+    Product.findById(productId)
+        .then(product => {
             if (!product) {
                 return res.redirect('/');
             }
