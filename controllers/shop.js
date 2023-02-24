@@ -40,16 +40,12 @@ exports.getProduct = (req, res, next) => {
 exports.getCart = (req, res, next) => {
     const { user } = req;
     user.getCart()
-        .then(cart => {
-            return cart.getProducts()
-                .then(products => {
-                    res.render('shop/cart', {
-                        path: '/cart',
-                        pageTitle: 'Your Cart',
-                        products: products
-                    });
-                })
-                .catch(err => console.error(err));
+        .then(products => {
+            res.render('shop/cart', {
+                path: '/cart',
+                pageTitle: 'Your Cart',
+                products: products
+            });    
         })
         .catch(err => console.error(err));
 }
