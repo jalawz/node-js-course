@@ -41,12 +41,15 @@ app.use(session({
 }));
 
 app.use((req, res, next) => {
-    User.findById('641778fd57d7758cc61e7221')
+    if (!req.session.user) {
+        return next();
+    }
+    User.findById(req.session.user._id)
         .then(user => {
-            req.user = user;
+            req.user = user
             next();
         })
-        .catch(err => console.error(err));
+        .catch(err => console.log(err));
 });
 
 // Register routes
