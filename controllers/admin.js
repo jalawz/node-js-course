@@ -1,6 +1,9 @@
 const Product = require('../models/product');
 
 exports.getAddProduct = (req, res, next) => {
+    if (!req.session.isLoggedIn) {
+        return res.redirect('/login');
+    }
     res.render('admin/edit-product', {
         pageTitle: 'Add Product',
         path: '/admin/add-product',
@@ -11,7 +14,7 @@ exports.getAddProduct = (req, res, next) => {
 
 exports.postAddProduct = (req, res, next) => {
     const { title, imageUrl, description, price } = req.body;
-    const product = new Product({title, price, description, imageUrl, userId: req.user});
+    const product = new Product({ title, price, description, imageUrl, userId: req.user });
     product.save()
         .then(() => {
             console.log('Created Product');
@@ -27,7 +30,7 @@ exports.getEditProduct = (req, res, next) => {
     if (!edit) {
         return res.redirect('/');
     }
-    
+
     Product.findById(productId)
         .then(product => {
             if (!product) {
@@ -45,7 +48,7 @@ exports.getEditProduct = (req, res, next) => {
 }
 
 exports.postEditProduct = (req, res, next) => {
-    const { 
+    const {
         productId,
         title,
         price,
